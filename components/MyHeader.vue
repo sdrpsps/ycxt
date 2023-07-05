@@ -11,7 +11,7 @@ const menus = ref([
 <template>
   <header class="fixed inset-x-0 top-0 z-10 bg-white shadow-md">
     <nav class="container m-auto flex h-[60px] items-center px-4">
-      <NButton text strong class="text-xl">
+      <NButton text strong class="text-xl" @click="navigateTo('/')">
         羊村学堂
       </NButton>
       <div class="flex flex-1 items-center px-4">
@@ -20,7 +20,7 @@ const menus = ref([
         </Menu>
       </div>
       <NuxtLink>
-        <NButton secondary strong>
+        <NButton secondary strong @click="navigateTo('/login')">
           登录
         </NButton>
       </NuxtLink>

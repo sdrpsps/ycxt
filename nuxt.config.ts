@@ -1,4 +1,7 @@
-export default {
+export default defineNuxtConfig({
+  devtools: {
+    enabled: true,
+  },
   modules: [
     '@huntersofbook/naive-ui-nuxt',
     '@unocss/nuxt',
@@ -23,4 +26,4 @@ export default {
     rules: [],
     safelist: [],
   },
-}
+})
