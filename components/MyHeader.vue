@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useUser } from '~/store/user'
+import { dialog } from '~/composabes/discrete'
+
 const route = useRoute()
 
 const menus = ref([
@@ -6,6 +9,36 @@ const menus = ref([
   { label: '专栏', path: '/column' },
   { label: '课程', path: '/course' },
 ])
+
+const options = [
+  {
+    label: '用户中心',
+    key: 'center',
+  },
+  {
+    label: '退出',
+    key: 'logout',
+  },
+]
+
+const store = useUser()
+const { userInfo } = storeToRefs(store)
+function onSelect(key: string) {
+  switch (key) {
+    case 'logout':
+      dialog.info({
+        title: '提示',
+        content: '确定退出登录吗？',
+        positiveText: '退出',
+        negativeText: '取消',
+        onPositiveClick: () => store.onLogout(),
+      })
+      break
+    case 'center':
+      navigateTo('/usercenter')
+      break
+  }
+}
 </script>
 
 <template>
@@ -15,15 +48,30 @@ const menus = ref([
         羊村学堂
       </NButton>
       <div class="flex flex-1 items-center px-4">
-        <Menu v-for="menu in menus" :key="menu.label" :active="route.path === menu.path" @click="navigateTo(menu.path)">
+        <Menu
+          v-for="menu in menus"
+          :key="menu.label"
+          :active="route.path === menu.path"
+          @click="navigateTo(menu.path)"
+        >
           {{ menu.label }}
         </Menu>
       </div>
-      <NuxtLink>
-        <NButton secondary strong @click="navigateTo('/login')">
-          登录
-        </NButton>
-      </NuxtLink>
+      <!-- 标识只在客户端渲染 -->
+      <ClientOnly>
+        <NuxtLink v-if="!userInfo" to="/login">
+          <NButton secondary strong>
+            登录
+          </NButton>
+        </NuxtLink>
+        <NDropdown v-else :options="options" @select="onSelect">
+          <NAvatar
+            round
+            size="small"
+            :src="userInfo.avatar ? userInfo.avatar : '/avatar.png'"
+          />
+        </NDropdown>
+      </ClientOnly>
     </nav>
   </header>
 </template>

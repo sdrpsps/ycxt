@@ -1,22 +1,27 @@
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      baseURL: '/api',
+    },
+  },
   devtools: {
     enabled: true,
   },
   modules: [
     '@huntersofbook/naive-ui-nuxt',
     '@unocss/nuxt',
-    // 引入 Pinia
-    [
-      '@pinia/nuxt',
-      {
-        autoImports: [
-          // 自动引入 `defineStore(), storeToRefs()`
-          'defineStore',
-          'storeToRefs',
-        ],
-      },
-    ],
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
   ],
+  pinia: {
+    autoImports: [
+      'defineStore',
+      'storeToRefs',
+    ],
+  },
+  piniaPersistedstate: {
+    storage: 'localStorage',
+  },
   unocss: {
     uno: true, // enabled `@unocss/preset-uno`
     icons: true, // enabled `@unocss/preset-icons`

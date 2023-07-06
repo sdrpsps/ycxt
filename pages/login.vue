@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { FormInst } from 'naive-ui'
+import type { FormInst, FormRules } from 'naive-ui'
+import { usePost } from '~/composabes/useRequest'
+import { useUser } from '~/store/user'
+import type { IUserLoginResponse } from '~/types/user'
 
 useHead({
   title: '登录',
@@ -9,11 +12,40 @@ definePageMeta({
   layout: 'blank',
 })
 
+const store = useUser()
+const message = useMessage()
+
 const loginFormRef = ref<FormInst | null>(null)
 const loginForm = ref({
   username: '',
   password: '',
 })
+const loginFormRules: FormRules = {
+  username: [{
+    required: true,
+    message: '请输入用户名',
+    trigger: 'blur',
+  }],
+  password: [{
+    required: true,
+    message: '请输入密码',
+    trigger: 'blur',
+  }],
+}
+function login() {
+  loginFormRef.value!.validate(async (errors) => {
+    if (!errors) {
+      const { data } = await usePost<IUserLoginResponse>('/login', loginForm)
+      if (data.value) {
+        // 保存user状态
+        store.userInfo = data.value?.data
+        message.success('登录成功')
+        // 跳转首页
+        navigateTo('/')
+      }
+    }
+  })
+}
 </script>
 
 <template>
@@ -25,16 +57,16 @@ const loginForm = ref({
       </NButton>
     </nuxt-link>
   </div>
-  <NForm ref="loginFormRef" class="w-[340px]" size="large">
+  <NForm ref="loginFormRef" :model="loginForm" :rules="loginFormRules" class="w-[340px]" size="large">
     <NFormItem :show-label="false" path="username">
-      <NInput v-model="loginForm.username" clearable placeholder="用户名" />
+      <NInput v-model:value="loginForm.username" clearable placeholder="用户名" />
     </NFormItem>
     <NFormItem :show-label="false" path="password">
-      <NInput v-model="loginForm.password" clearable placeholder="密码" type="password" />
+      <NInput v-model:value="loginForm.password" clearable placeholder="密码" type="password" />
     </NFormItem>
 
     <div>
-      <NButton class="w-full" type="primary">
+      <NButton class="w-full" type="primary" @click="login">
         登录
       </NButton>
     </div>
