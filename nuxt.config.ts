@@ -1,9 +1,4 @@
 export default defineNuxtConfig({
-  runtimeConfig: {
-    public: {
-      baseURL: '/api',
-    },
-  },
   devtools: {
     enabled: true,
   },

@@ -1,4 +1,5 @@
 import { hash } from 'argon2'
+import { omit } from 'lodash-es'
 import jwt from 'jsonwebtoken'
 import type { IUserRegisterBody } from '~/types/user'
 import { createUser, getUserByUsername } from '~/server/database/repositories/userRepository'
@@ -26,12 +27,13 @@ export default defineEventHandler(async (e) => {
 
     // 生成 JWToken，写入 cookies
     const token = jwt.sign({ username: res.username }, process.env.SECRET_TOKEN, { expiresIn: '24h' })
+    const response = omit({ ...res, token }, 'password')
+
     return {
       statusCode: 200,
       statusMessage: '注册成功',
       data: {
-        username: res.username,
-        token,
+        response,
       },
     }
   }

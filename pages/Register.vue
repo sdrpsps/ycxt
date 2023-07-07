@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { FormInst, FormRules } from 'naive-ui'
+import type { IUserRegisterResponse } from 'types/user'
 import { useUser } from '~/store/user'
-import { usePost } from '~/composabes/useRequest'
-import type { IUserRegisterResponse } from '~/types/user'
 
 useHead({
   title: '注册',
@@ -53,12 +52,10 @@ const message = useMessage()
 function register() {
   registerFormRef.value!.validate(async (errors) => {
     if (!errors) {
-      const { data } = await usePost<IUserRegisterResponse>('/register', registerForm)
+      const { data } = usePost<IUserRegisterResponse>('/api/register', registerForm)
       if (data.value) {
-        // 保存user状态
         store.userInfo = data.value?.data
         message.success('注册成功')
-        // 跳转首页
         navigateTo('/')
       }
     }

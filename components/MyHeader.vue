@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useUser } from '~/store/user'
-import { dialog } from '~/composabes/discrete'
+import { dialog } from '~/composables/discrete'
 
 const route = useRoute()
 
@@ -75,3 +75,5 @@ function onSelect(key: string) {
     </nav>
   </header>
 </template>
+store/userStore
+store/user

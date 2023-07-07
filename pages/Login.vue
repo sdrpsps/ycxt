@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { FormInst, FormRules } from 'naive-ui'
-import { usePost } from '~/composabes/useRequest'
+import type { IUserLoginResponse } from 'types/user'
 import { useUser } from '~/store/user'
-import type { IUserLoginResponse } from '~/types/user'
 
 useHead({
   title: '登录',
@@ -35,12 +34,10 @@ const loginFormRules: FormRules = {
 function login() {
   loginFormRef.value!.validate(async (errors) => {
     if (!errors) {
-      const { data } = await usePost<IUserLoginResponse>('/login', loginForm)
+      const { data } = await usePost<IUserLoginResponse>('/api/login', loginForm)
       if (data.value) {
-        // 保存user状态
-        store.userInfo = data.value?.data
+        store.userInfo = data.value.data
         message.success('登录成功')
-        // 跳转首页
         navigateTo('/')
       }
     }
