@@ -6,8 +6,8 @@ const route = useRoute()
 
 const menus = ref([
   { label: '首页', path: '/' },
-  { label: '专栏', path: '/column' },
-  { label: '课程', path: '/course' },
+  { label: '专栏', path: '/list/column' },
+  { label: '课程', path: '/list/course' },
 ])
 
 const options = [
