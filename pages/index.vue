@@ -11,8 +11,10 @@ const slides = [
   { label: '3', bgColor: 'blueviolet' },
   { label: '4', bgColor: 'brown' },
 ]
-const { data: columnData } = await useGet<IColumnsResponse>('/api/index/columns')
-const { data: courseData } = await useGet<ICoursesResponse>('/api/index/courses')
+const { data: columnData, error: columnError } = await useGet<IColumnsResponse>('/api/index/columns')
+const { data: courseData, error: courseError } = await useGet<ICoursesResponse>('/api/index/courses')
+if (process.server && (columnError.value || courseError.value))
+  showError('获取数据失败！')
 </script>
 
 <template>
