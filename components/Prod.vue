@@ -23,7 +23,7 @@ function open() {
   >
     <template #cover>
       <img
-        src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+        :src="`/${data.cover}`"
         class="h-[150px] w-[100%] object-cover"
         alt=""
       >

@@ -11,6 +11,7 @@ export async function getNewColumns() {
   })
 }
 
+// 获取专栏列表
 export async function getColumns(page: number, size: number): Promise<{ columns: Column[] | null; total: number }> {
   const [columns, total] = await Promise.all([
     prisma.column.findMany({
@@ -21,4 +22,13 @@ export async function getColumns(page: number, size: number): Promise<{ columns:
     prisma.column.count(),
   ])
   return { columns, total }
+}
+
+// 获取专栏详情
+export async function getColumnById(id: number): Promise<Column | null> {
+  return await prisma.column.findFirst({
+    where: {
+      id,
+    },
+  })
 }

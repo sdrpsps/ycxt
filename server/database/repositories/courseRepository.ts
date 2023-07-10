@@ -11,6 +11,7 @@ export async function getNewCourses() {
   })
 }
 
+// 获取课程列表
 export async function getCourses(page: number, size: number): Promise<{ courses: Course[] | null; total: number }> {
   const [courses, total] = await Promise.all([
     prisma.course.findMany({
@@ -21,4 +22,14 @@ export async function getCourses(page: number, size: number): Promise<{ courses:
     prisma.column.count(),
   ])
   return { courses, total }
+}
+
+// 获取课程详情
+export async function getCourseById(id: number): Promise<Course | null> {
+  return await prisma.course.findFirst({
+    where: {
+      id,
+    },
+    include: { Catalogue: true },
+  })
 }
