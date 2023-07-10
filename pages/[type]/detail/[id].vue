@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ICourseDetailResponse } from '~/types/course'
+import type { ICreateOrderResponse } from '~/types/order'
 
 const route = useRoute()
 const { id, type } = route.params
@@ -20,8 +21,14 @@ if (type === 'course') {
   })
 }
 
-function subscribe() {
-  navigateTo(`/createorder?id=${id}`)
+async function subscribe() {
+  // 创建订单
+  const { data } = await usePost<ICreateOrderResponse>('/api/order/create', { courseId: id })
+
+  if (data.value) {
+    // 然后跳转订单确认页面
+    navigateTo(`/order/confirm?id=${data.value.data.orderId}`)
+  }
 }
 </script>
 
@@ -50,7 +57,7 @@ function subscribe() {
           </div>
         </div>
 
-        <div class="mt-auto">
+        <div v-if="type === 'course'" class="mt-auto">
           <NButton type="primary" @click="subscribe">
             快到碗里来
           </NButton>

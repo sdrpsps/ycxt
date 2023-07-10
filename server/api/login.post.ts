@@ -28,7 +28,7 @@ export default defineEventHandler(async (e) => {
     }
 
     // 生成 JWToken 并返回
-    const token = jwt.sign({ username: user.username }, process.env.SECRET_TOKEN, { expiresIn: '24h' })
+    const token = jwt.sign({ username: user.username, id: user.id }, process.env.SECRET_TOKEN, { expiresIn: '24h' })
     return {
       statusCode: 200,
       statusMessage: '登录成功',
