@@ -1,11 +1,6 @@
-import type { JwtPayload } from 'jsonwebtoken'
 import jwt from 'jsonwebtoken'
+import type { UserInfo } from '~/types/user'
 import { getUserByUsername } from '~/server/database/repositories/userRepository'
-
-interface userInfo extends JwtPayload {
-  exp: number
-  username: string
-}
 
 export default defineEventHandler(async (e) => {
   // 获取 token
@@ -20,7 +15,7 @@ export default defineEventHandler(async (e) => {
   let userInfo
   try {
     // 解析 token
-    userInfo = jwt.verify(token, process.env.SECRET_TOKEN) as userInfo
+    userInfo = jwt.verify(token, process.env.SECRET_TOKEN) as Omit<UserInfo, 'id'>
     const currentTime = Date.now() / 1000
     if (userInfo.exp < currentTime) {
       return sendError(e, createError({
@@ -31,7 +26,7 @@ export default defineEventHandler(async (e) => {
   }
   catch (error) {
     return sendError(e, createError({
-      statusCode: 401,
+      statusCode: 403,
       statusMessage: 'token 不合法',
     }))
   }

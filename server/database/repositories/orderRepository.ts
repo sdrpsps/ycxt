@@ -1,13 +1,14 @@
 import type { Order } from '@prisma/client'
 import prisma from '~/server/database/client'
 
+// 创建订单
 export async function createOrder(data: Order) {
-  const user = await prisma.order.create({ data })
-  return user
+  return await prisma.order.create({ data })
 }
 
+// 获取订单详情
 export async function getOrderById(id: number) {
-  const result = await prisma.order.findUnique({
+  return await prisma.order.findUnique({
     where: {
       id,
     },
@@ -22,15 +23,35 @@ export async function getOrderById(id: number) {
       },
     },
   })
-  return result
 }
 
+// 修改订单详情
 export async function updateOrder(id: number, data: Partial<Order>) {
-  const result = await prisma.order.update({
+  return await prisma.order.update({
     where: {
       id,
     },
     data,
   })
-  return result
+}
+
+// 通过用户id获取订单列表
+export async function getCoursesByUser(userId: number) {
+  const orders = await prisma.order.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      course: {
+        select: {
+          id: true,
+          title: true,
+          cover: true,
+        },
+      },
+    },
+  })
+
+  const courses = orders.flatMap(order => order.course)
+  return courses.filter((course, index, arr) => arr.findIndex(c => c.id === course.id) === index)
 }

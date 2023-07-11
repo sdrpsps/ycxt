@@ -1,3 +1,5 @@
+import type { JwtPayload } from 'jsonwebtoken'
+
 export interface IUserLogin {
   username: string
   password: string
@@ -31,4 +33,10 @@ export interface IUserRegister {
 
 export interface IUserRegisterResponse extends IUserLoginResponse {
 
+}
+
+export interface UserInfo extends JwtPayload {
+  exp: number
+  username: string
+  id: number
 }

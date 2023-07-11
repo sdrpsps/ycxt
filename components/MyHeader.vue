@@ -35,7 +35,7 @@ function onSelect(key: string) {
       })
       break
     case 'center':
-      navigateTo('/usercenter')
+      navigateTo('/user/purchased')
       break
   }
 }
