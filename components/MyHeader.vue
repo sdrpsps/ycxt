@@ -43,7 +43,7 @@ function onSelect(key: string) {
 
 <template>
   <header class="fixed inset-x-0 top-0 z-10 bg-white shadow-md">
-    <nav class="container m-auto flex h-[60px] items-center px-4">
+    <nav class="container m-auto box-border flex h-[60px] items-center px-2 lg:px-4">
       <NButton text strong class="text-xl" @click="navigateTo('/')">
         羊村学堂
       </NButton>

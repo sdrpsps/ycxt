@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { IOrderDetailResponse } from 'types/order'
 
+definePageMeta({
+  middleware: ['auth'],
+})
+
 const route = useRoute()
 const { id } = route.query
 

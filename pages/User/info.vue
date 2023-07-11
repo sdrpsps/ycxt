@@ -2,6 +2,10 @@
 import type { IUserLoginResponse } from 'types/user'
 import { useUser } from '~/store/user'
 
+definePageMeta({
+  middleware: ['auth'],
+})
+
 // 获取用户名
 const store = useUser()
 const { userInfo } = storeToRefs(store)

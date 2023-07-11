@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { FormInst } from 'naive-ui'
 
+definePageMeta({
+  middleware: ['auth'],
+})
+
 useHead({ title: '修改密码' })
 
 const formRef = ref<FormInst>()

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: ['auth'],
+})
+
 useHead({ title: '购买记录' })
 
 const { data, pending } = useGet('/api/user/purchased')

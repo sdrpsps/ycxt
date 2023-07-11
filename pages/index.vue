@@ -20,7 +20,7 @@ if (process.server && (columnError.value || courseError.value))
 <template>
   <div>
     <NCarousel show-arrow>
-      <div v-for="item in slides" :key="item.label" class="h-[400px] w-full cursor-pointer rounded text-center leading-[400px] text-white" :style="{ backgroundColor: item.bgColor }">
+      <div v-for="item in slides" :key="item.label" class="h-[150px] w-full cursor-pointer rounded text-center leading-[400px] text-white lg:h-[400px]" :style="{ backgroundColor: item.bgColor }">
         {{ item.label }}
       </div>
     </NCarousel>

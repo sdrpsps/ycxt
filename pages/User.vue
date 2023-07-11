@@ -1,5 +1,9 @@
 <!-- 用户：个人中心页面 -->
 <script setup lang="ts">
+definePageMeta({
+  middleware: ['auth'],
+})
+
 const route = useRoute()
 const pageKey = computed(() => route.fullPath)
 
