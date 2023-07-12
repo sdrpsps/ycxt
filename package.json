@@ -5,6 +5,7 @@
     "seed": "ts-node server/database/seed.ts"
   },
   "scripts": {
+    "start": "nuxt start",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
@@ -12,7 +13,7 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "migrate": "npx prisma migrate reset --schema server/database/schema.prisma",
+    "migrate": "npx prisma migrate reset --schema ./server/database/schema.prisma --force",
     "seed": "npx prisma db seed"
   },
   "dependencies": {

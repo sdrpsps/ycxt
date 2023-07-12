@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IUserLoginResponse } from 'types/user'
+import type { IUserLoginResponse } from '~/types/user'
 import { useUser } from '~/store/user'
 
 definePageMeta({
